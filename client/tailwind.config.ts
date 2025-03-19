@@ -1,22 +1,23 @@
-// import { createThemes } from 'tw-colors'
-// import colors from 'tailwindcss/colors';
+import type { Config } from 'tailwindcss'
+import { createThemes } from 'tw-colors'
+import colors from 'tailwindcss/colors';
 // import autoprefixer from 'autoprefixer';
-// // import tailwindcss from '@tailwindcss/postcss';
+// import tailwindcss from '@tailwindcss/postcss';
 
 
 
-// const baseColors = [
-//   "gray",
-//   "red",
-//   "yellow",
-//   "green",
-//   "blue",
-//   "indigo",
-//   "purple",
-//   "pink",
-// ];
+const baseColors = [
+  "gray",
+  "red",
+  "yellow",
+  "green",
+  "blue",
+  "indigo",
+  "purple",
+  "pink",
+];
 
-// // Updated colors in RGB format (after converting from OKLCH)
+// Updated colors in RGB format (after converting from OKLCH)
 // const convertedColors = {
 //   gray: {
 //     50: "rgb(254, 254, 254)",  // Example RGB conversion
@@ -117,53 +118,63 @@
 // };
 
 
-// const shadeMapping = {
-//   "50": "900",
-//   "100": "800",
-//   "200": "700",
-//   "300": "600",
-//   "400": "500",
-//   "500": "400",
-//   "600": "300",
-//   "700": "200",
-//   "800": "100",
-//   "900": "50",
+const shadeMapping = {
+  "50": "900",
+  "100": "800",
+  "200": "700",
+  "300": "600",
+  "400": "500",
+  "500": "400",
+  "600": "300",
+  "700": "200",
+  "800": "100",
+  "900": "50",
 
-// };
+};
 
-// const generateThemeObject = (colors, mapping, invert = false) => {
-//   const theme = {};
-//   baseColors.forEach((color)=> {
-//     theme[color] = {};
-//     Object.entries(mapping).forEach(([key, value]) => {
-//       const shadekey = invert ? value : key;
-//       theme[color][key] = colors[color][shadekey];
-//     });
-//   });
-//   return theme;
-// }
+const generateThemeObject = (colors: any, mapping:any, invert = false) => {
+  const theme = {};
+  baseColors.forEach((color)=> {
+    theme[color] = {};
+    Object.entries(mapping).forEach(([key, value]: any) => {
+      const shadekey = invert ? value : key;
+      theme[color][key] = colors[color][shadekey];
+    });
+  });
+  return theme;
+}
 
-// const lightTheme = generateThemeObject(convertedColors, shadeMapping);
-// const darkTheme = generateThemeObject(convertedColors, shadeMapping, true);
+const lightTheme = generateThemeObject(colors, shadeMapping);
+const darkTheme = generateThemeObject(colors, shadeMapping, true);
 
-// const themes = {
-//   lights: {
-//     ...lightTheme,
-//     white: "#ffffff"
-//   },
-//   dark: {
-//     ...darkTheme,
-//     white: colors.gray["950"],
-//     black: colors.gray["50"]
-//   }
-// }
+const themes = {
+  lights: {
+    ...lightTheme,
+    white: "#ffffff"
+  },
+  dark: {
+    ...darkTheme,
+    white: colors.gray["950"],
+    black: colors.gray["50"]
+  }
+}
 
-// const config = {
-//   plugins: [
-//     tailwindcss,
-//     autoprefixer,
-//     createThemes({ themes: {} }), // Make sure this is correct
-//   ],
-// };
+const config : Config = {
+  darkMode: "class",
+  content: [
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+ 
+    // Or if using `src` directory:
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [
+    createThemes(themes), 
+  ]
+};
 
-// export default config;
+export default config;
